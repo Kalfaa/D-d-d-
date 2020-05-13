@@ -8,4 +8,4 @@
 - Une salle disponible
 
 ## THEN
-- Planification de l'entretien
+- La RH réalise la planificiation de l'entretien
