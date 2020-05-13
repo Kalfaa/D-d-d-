@@ -1,0 +1,2 @@
+class HR:
+    name = ""
