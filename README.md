@@ -1,7 +1,7 @@
 # GROUPE 4
 
 ## GIVEN
-- Un candidat
+- Un candidat est disponible a une date donnée
 
 ## WHEN
 - Un consultant recruteur disponible
