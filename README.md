@@ -8,4 +8,6 @@
 - Une salle est disponible
 
 ## THEN
-- La RH réalise la planification de l'entretien
+- La RH réalise la planification de l'entretien avec le candidat
+- La RH réserve la salle
+- La RH convoque le consultant recruteur
