@@ -1,10 +1,11 @@
 # GROUPE 4
 
 ## GIVEN
-- Un candidat est disponible à une date donnée
+- Un poste est disponible pour un candidat avec des compétences spécifiques
+- Un candidat avec ces compétences spécifiques, disponible à une date donnée
 
 ## WHEN
-- Un consultant recruteur est disponible sur la date donnée
+- Un consultant recruteur est disponible sur la date donnée et possédent des compétences spécifiques
 - Une salle est disponible sur la date donnée
 
 ## THEN
