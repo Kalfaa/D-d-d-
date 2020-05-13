@@ -4,8 +4,8 @@
 - Un candidat est disponible à une date donnée
 
 ## WHEN
-- Un consultant recruteur est disponible
-- Une salle est disponible
+- Un consultant recruteur est disponible sur la date donnée
+- Une salle est disponible sur la date donnée
 
 ## THEN
 - La RH réalise la planification de l'entretien avec le candidat
