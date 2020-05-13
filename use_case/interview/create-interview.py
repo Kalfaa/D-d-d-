@@ -1,3 +1,3 @@
-class InterviewCreation:
-    def create(self):
+class CreateInterview:
+    def create(self, interviewer, candidate, room):
         return
