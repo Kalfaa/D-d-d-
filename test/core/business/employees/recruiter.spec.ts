@@ -11,6 +11,7 @@ describe('Recruiter business test',() => {
     });
 
     test('Show date avabilities',()=> {
-        //subject.isAvailable();
-    });
+        let res = subject.isAvailable(yesterday,today);
+
+         });
 });
