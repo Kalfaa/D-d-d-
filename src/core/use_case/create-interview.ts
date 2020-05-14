@@ -9,37 +9,14 @@ export class CreateInterview {
     private readonly interviewRepository: InterviewRepositoryInterface,
     private readonly recruiterRepository: RecruiterRepositoryInterface,
     private readonly roomRepository: RoomRepositoryInterface,
+    private readonly interview: Interview
   ) {}
 
-  plan(candidate: Candidate): Interview {
-    const recruiters = this.recruiterRepository.getRecruitersBySkills(
-      candidate.skills
-    );
-
-    if (recruiters.length === 0) {
-      throw new Error('No recruiter available for those skills');
-    }
-
-    for (const availability of candidate.availabilities) {
-      const availableRecruiter = recruiters.find((r) => r.isAvailable(availability[0], availability[1]));
-
-      if (availableRecruiter) {
-        const availableRoom = this.roomRepository.getRoomByAvailability(availability);
-
-        if (availableRoom) {
-          availableRoom.book(availability);
-          this.roomRepository.save(availableRoom);
-
-          return this.interviewRepository.create(
-            availability,
-            availableRoom,
-            candidate,
-            availableRecruiter
-          );
-        }
-      }
-    }
-
-    throw new Error('No room or recruiter available');
+  planInterview(candidate: Candidate) {
+    interview = create(candidate, this.recruiterRepository, this.roomRepository, this.interviewRepository);
   }
+
+  // TODO : annuler
+
+
 }

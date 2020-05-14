@@ -10,8 +10,23 @@ describe('Recruiter business test',() => {
         subject = new Recruiter("OUGO", [],[[yesterday,today]]);
     });
 
-    test('Show date avabilities',()=> {
-        let res = subject.isAvailable(yesterday,today);
+    test('Recruiter isAvailable should return true',()=> {
 
-         });
+        let res = subject.isAvailable(yesterday,today);
+        expect(res).toBe(true);
+    });
+
+    test('Recruiter isAvailable should return false',()=> {
+        let threeDay: Date = new Date();
+        threeDay.setDate(threeDay.getDate() - 3);
+        let res = subject.isAvailable(threeDay,today);
+        expect(res).toBe(false);
+    });
+
+    test('Recruiter isAvailablee should return false',()=> {
+        let threeDay: Date = new Date();
+        threeDay.setDate(threeDay.getDate() + 3);
+        let res = subject.isAvailable(threeDay,today);
+        expect(res).toBe(false);
+    });
 });
