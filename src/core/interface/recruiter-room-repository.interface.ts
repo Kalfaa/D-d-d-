@@ -1,10 +1,10 @@
-import {Room} from "../business/room/room.model";
-import {Recruiter} from "../business/employees/recruiter.model";
+import {RoomDTO} from "../../common/dto/room/room.dto";
+import {RecruiterDTO} from "../../common/dto/employees/recruiter.dto";
 
 export interface RecruiterRoomRepositoryInterface {
   getRoomAndRecruiterWithSkillsAndAvailabilitiesOrFail(availabilities: [Date, Date][], skills: string[]): {
-    room: Room;
-    recruiter: Recruiter;
+    room: RoomDTO;
+    recruiter: RecruiterDTO;
     timeInterval: [Date, Date];
   };
 }

@@ -1,5 +1,8 @@
-import {HrRepositoryInterface} from "../core/interface/hr-repository.interface";
+import {HrRepositoryInterface} from "../core/business/employees/hr-repository.interface";
+import {HrMapper} from "../common/mapper/hr.mapper";
 
 export class HrRepository implements HrRepositoryInterface {
-
+  constructor(
+    private readonly mapper: HrMapper,
+  ) {}
 }

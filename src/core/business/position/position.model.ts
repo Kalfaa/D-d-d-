@@ -1,6 +1,6 @@
 export class Position {
   constructor(
-    private readonly name: string,
-    private readonly skills: string[],
+    public readonly name: string,
+    public readonly skills: string[],
   ) {}
 }

@@ -1,8 +1,13 @@
-import {PositionRepositoryInterface} from "../core/interface/position-repository.interface";
-import {Position} from "../core/business/position/position.model";
+import {PositionRepositoryInterface} from "../core/business/position/position-repository.interface";
+import {PositionDTO} from "../common/dto/position/position.dto";
+import {PositionMapper} from "../common/mapper/position.mapper";
 
 export class PositionRepository implements PositionRepositoryInterface {
-  getPositionsWithSkills(skills: string[]): Position[] {
-    return [];
+  constructor(
+    private readonly mapper: PositionMapper,
+  ) {}
+
+  getPositionsWithSkills(skills: string[]): PositionDTO[] {
+    return [].map((p) => this.mapper.toDTO(p));
   }
 }

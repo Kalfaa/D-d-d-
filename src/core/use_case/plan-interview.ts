@@ -1,31 +1,51 @@
-import {InterviewRepositoryInterface} from "../interface/interview-repository.interface";
-import {Candidate} from "../business/candidate/candidate.model";
-import {RecruiterRepositoryInterface} from "../interface/recruiter-repository.interface";
-import {RoomRepositoryInterface} from "../interface/room-repository.interface";
-import {Interview} from "../business/interview/interview.model";
-import {Recruiter} from "../business/employees/recruiter.model";
-import {Room} from "../business/room/room.model";
+import {PositionRepositoryInterface} from "../business/position/position-repository.interface";
+import {BookRoom} from "./book-room";
+import {RecruiterRoomRepositoryInterface} from "../interface/recruiter-room-repository.interface";
+import {CandidateDTO} from "../../common/dto/candidate/candidate.dto";
+import {InterviewDTO} from "../../common/dto/interview/interview.dto";
+import {InterviewRepositoryInterface} from "../business/interview/interview-repository.interface";
+import {RoomMapper} from "../../common/mapper/room.mapper";
+import {CandidateMapper} from "../../common/mapper/candidate.mapper";
+import {RecruiterMapper} from "../../common/mapper/recruiter.mapper";
 
 export class PlanInterview {
   constructor(
+    private readonly positionRepository: PositionRepositoryInterface,
     private readonly interviewRepository: InterviewRepositoryInterface,
-    private readonly roomRepository: RoomRepositoryInterface,
+    private readonly recruiterRoomRepository: RecruiterRoomRepositoryInterface,
+    private readonly bookRoomUseCase: BookRoom,
+    private readonly roomMapper: RoomMapper,
+    private readonly candidateMapper: CandidateMapper,
+    private readonly recruiterMapper: RecruiterMapper,
   ) {}
 
-  plan(candidate: Candidate, recruiter: Recruiter, room: Room, timeInterval: [Date, Date]): Interview {
-    room.book(timeInterval);
-    this.roomRepository.save(room);
+  plan(candidate: CandidateDTO): InterviewDTO {
+    // GIVEN
+    const availablePositions = this.positionRepository.getPositionsWithSkills(candidate.skills);
+
+    if (availablePositions.length === 0) {
+      throw new Error('No positions available for those skills');
+    }
+
+    // WHEN
+    const { room, recruiter, timeInterval } = this.recruiterRoomRepository.getRoomAndRecruiterWithSkillsAndAvailabilitiesOrFail(
+      candidate.availabilities,
+      candidate.skills,
+    );
+
+    // THEN
+    const bookedRoom = this.bookRoomUseCase.book(
+      candidate,
+      recruiter,
+      room,
+      timeInterval,
+    );
 
     return this.interviewRepository.create(
       timeInterval,
-      room,
-      candidate,
-      recruiter
+      this.roomMapper.toModel(bookedRoom),
+      this.candidateMapper.toModel(candidate),
+      this.recruiterMapper.toModel(recruiter),
     );
-  }
-
-  cancel(interview: Interview): void {
-    interview.cancel();
-    this.interviewRepository.save(interview);
   }
 }

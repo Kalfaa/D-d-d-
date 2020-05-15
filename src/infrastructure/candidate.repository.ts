@@ -1,8 +1,14 @@
-import { CandidateRepositoryInterface } from "../core/interface/candidate-repository.interface";
+import { CandidateRepositoryInterface } from "../core/business/candidate/candidate-repository.interface";
 import {Candidate} from "../core/business/candidate/candidate.model";
+import {CandidateDTO} from "../common/dto/candidate/candidate.dto";
+import {CandidateMapper} from "../common/mapper/candidate.mapper";
 
 export class CandidateRepository implements CandidateRepositoryInterface {
-  create(name: string, skills: string[], availabilities: [Date, Date][]): Candidate {
-    return new Candidate(name, skills, availabilities);
+  constructor(
+    private readonly mapper: CandidateMapper,
+  ) {}
+
+  create(name: string, skills: string[], availabilities: [Date, Date][]): CandidateDTO {
+    return this.mapper.toDTO(new Candidate(name, skills, availabilities));
   }
 }

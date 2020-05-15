@@ -11,10 +11,10 @@ export class Interview {
   private  state: InterviewState = InterviewState.CREATED;
 
   constructor(
-    private readonly timeInterval: [Date, Date],
-    private readonly room: Room,
-    private readonly candidate: Candidate,
-    private readonly recruiter: Recruiter,
+    public readonly timeInterval: [Date, Date],
+    public readonly room: Room,
+    public readonly candidate: Candidate,
+    public readonly recruiter: Recruiter,
   ) {}
 
   cancel() {

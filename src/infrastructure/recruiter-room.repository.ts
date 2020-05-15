@@ -1,8 +1,12 @@
 import {Recruiter} from "../core/business/employees/recruiter.model";
 import {Room} from "../core/business/room/room.model";
-import {RecruiterRepositoryInterface} from "../core/interface/recruiter-repository.interface";
-import {RoomRepositoryInterface} from "../core/interface/room-repository.interface";
+import {RecruiterRepositoryInterface} from "../core/business/employees/recruiter-repository.interface";
+import {RoomRepositoryInterface} from "../core/business/room/room-repository.interface";
 import {RecruiterRoomRepositoryInterface} from "../core/interface/recruiter-room-repository.interface";
+import {RoomDTO} from "../common/dto/room/room.dto";
+import {RecruiterDTO} from "../common/dto/employees/recruiter.dto";
+import {RoomMapper} from "../common/mapper/room.mapper";
+import {RecruiterMapper} from "../common/mapper/recruiter.mapper";
 
 // This is an aggregation
 export class RecruiterRoomRepository implements RecruiterRoomRepositoryInterface {
@@ -12,8 +16,8 @@ export class RecruiterRoomRepository implements RecruiterRoomRepositoryInterface
   ) {}
 
   getRoomAndRecruiterWithSkillsAndAvailabilitiesOrFail(availabilities: [Date, Date][], skills: string[]): {
-    room: Room;
-    recruiter: Recruiter;
+    room: RoomDTO;
+    recruiter: RecruiterDTO;
     timeInterval: [Date, Date];
   } {
     const recruiters = this.recruiterRepository.getRecruitersWithSkillsAndAvailabilitiesOrFail(
@@ -22,18 +26,14 @@ export class RecruiterRoomRepository implements RecruiterRoomRepositoryInterface
     );
 
     for (const recruiter of recruiters) {
-      const rooms = this.roomRepository.getRoomsByAvailabilitiesOrFail(recruiter.availabilities);
+      const roomWithAvailability = this.roomRepository.getRoomByAvailabilities(recruiter.availabilities);
 
-      for (const room of rooms) {
-        for (const recruiterAvailability of recruiter.availabilities) {
-          if (room.isAvailable(recruiterAvailability)) {
-            return {
-              room,
-              recruiter,
-              timeInterval: recruiterAvailability,
-            };
-          }
-        }
+      if (roomWithAvailability) {
+        return {
+          room: roomWithAvailability.room,
+          recruiter: recruiter,
+          timeInterval: roomWithAvailability.availabilityInterval,
+        };
       }
     }
 
