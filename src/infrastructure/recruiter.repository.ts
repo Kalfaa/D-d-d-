@@ -2,7 +2,7 @@ import {RecruiterRepositoryInterface} from "../core/interface/recruiter-reposito
 import {Recruiter} from "../core/business/employees/recruiter.model";
 
 export class RecruiterRepository implements RecruiterRepositoryInterface {
-  getRecruitersBySkills(skills: string[]): Recruiter[] {
+  getRecruitersWithSkillsAndAvailabilitiesOrFail(skills: string[], availabilities: [Date, Date][]): Recruiter[] {
     return [];
   }
 }

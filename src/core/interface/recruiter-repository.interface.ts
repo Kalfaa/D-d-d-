@@ -1,5 +1,5 @@
 import {Recruiter} from "../business/employees/recruiter.model";
 
 export interface RecruiterRepositoryInterface {
-  getRecruitersBySkills(skills: string[]): Recruiter[];
+  getRecruitersWithSkillsAndAvailabilitiesOrFail(skills: string[], availabilities: [Date, Date][]): Recruiter[];
 }

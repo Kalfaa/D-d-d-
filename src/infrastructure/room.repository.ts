@@ -2,8 +2,9 @@ import {RoomRepositoryInterface} from "../core/interface/room-repository.interfa
 import {Room} from "../core/business/room/room.model";
 
 export class RoomRepository implements RoomRepositoryInterface {
-  getRoomByAvailability(availability: [Date, Date]): Room | undefined {
-    return undefined;
+
+  getRoomByAvailabilitiesOrFail(availabilities: [Date, Date][]): Room {
+    return new Room("123", []);
   }
 
   save(room: Room): undefined {

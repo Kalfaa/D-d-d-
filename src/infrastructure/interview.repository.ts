@@ -18,4 +18,8 @@ export class InterviewRepository implements InterviewRepositoryInterface {
       recruiter,
     );
   }
+
+  save(interview: Interview): undefined {
+    return undefined;
+  }
 }

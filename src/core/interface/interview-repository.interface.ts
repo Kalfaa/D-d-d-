@@ -10,4 +10,6 @@ export interface InterviewRepositoryInterface {
     candidate: Candidate,
     recruiter: Recruiter
   ): Interview;
+
+  save(interview: Interview): undefined;
 }
