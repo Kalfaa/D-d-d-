@@ -1,5 +1,10 @@
 # GROUPE 4
 
+## Pour lancer les tests
+
+- npm install
+- npm run test
+
 ## GIVEN
 - Un poste est disponible pour un candidat avec des compétences spécifiques
 - Un candidat avec ces compétences spécifiques, disponible à une date donnée

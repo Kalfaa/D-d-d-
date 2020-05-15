@@ -8,3 +8,4 @@ export interface RecruiterRoomRepositoryInterface {
     timeInterval: [Date, Date];
   };
 }
+
