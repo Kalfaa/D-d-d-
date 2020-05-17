@@ -5,3 +5,4 @@ export class Recruiter {
     public readonly availabilities: [Date, Date][] = [],
   ) {}
 }
+

@@ -1,5 +1,5 @@
-import {InterviewDTO} from "../../common/dto/interview/interview.dto";
-import {InterviewRepositoryInterface} from "../business/interview/interview-repository.interface";
+import {InterviewDTO} from "../../common/dto/interview.dto";
+import {InterviewRepositoryInterface} from "../business/interview-repository.interface";
 import {InterviewMapper} from "../../common/mapper/interview.mapper";
 
 export class CancelInterview {

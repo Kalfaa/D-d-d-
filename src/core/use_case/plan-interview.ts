@@ -1,51 +1,40 @@
-import {PositionRepositoryInterface} from "../business/position/position-repository.interface";
 import {BookRoom} from "./book-room";
-import {RecruiterRoomRepositoryInterface} from "../interface/recruiter-room-repository.interface";
-import {CandidateDTO} from "../../common/dto/candidate/candidate.dto";
-import {InterviewDTO} from "../../common/dto/interview/interview.dto";
-import {InterviewRepositoryInterface} from "../business/interview/interview-repository.interface";
-import {RoomMapper} from "../../common/mapper/room.mapper";
-import {CandidateMapper} from "../../common/mapper/candidate.mapper";
-import {RecruiterMapper} from "../../common/mapper/recruiter.mapper";
+import {CandidateDTO} from "../../common/dto/candidate.dto";
+import {InterviewDTO} from "../../common/dto/interview.dto";
+import {InterviewRepositoryInterface} from "../business/interview-repository.interface";
+import {RecruiterRepositoryInterface} from "../business/recruiter-repository.interface";
+import {RoomRepositoryInterface} from "../business/room-repository.interface";
+import {Interview} from "../business/interview.model";
 
 export class PlanInterview {
   constructor(
-    private readonly positionRepository: PositionRepositoryInterface,
     private readonly interviewRepository: InterviewRepositoryInterface,
-    private readonly recruiterRoomRepository: RecruiterRoomRepositoryInterface,
+    private readonly recruiterRepository: RecruiterRepositoryInterface,
+    private readonly roomRepository: RoomRepositoryInterface,
     private readonly bookRoomUseCase: BookRoom,
-    private readonly roomMapper: RoomMapper,
-    private readonly candidateMapper: CandidateMapper,
-    private readonly recruiterMapper: RecruiterMapper,
   ) {}
 
   plan(candidate: CandidateDTO): InterviewDTO {
     // GIVEN
-    const availablePositions = this.positionRepository.getPositionsWithSkills(candidate.skills);
-
-    if (availablePositions.length === 0) {
-      throw new Error('No positions available for those skills');
-    }
-
-    // WHEN
-    const { room, recruiter, timeInterval } = this.recruiterRoomRepository.getRoomAndRecruiterWithSkillsAndAvailabilitiesOrFail(
+    const recruiters = this.recruiterRepository.getRecruiters(
       candidate.availabilities,
       candidate.skills,
     );
 
-    // THEN
-    const bookedRoom = this.bookRoomUseCase.book(
-      candidate,
-      recruiter,
-      room,
-      timeInterval,
+    const rooms = this.roomRepository.getRooms(
+      candidate.availabilities,
     );
 
-    return this.interviewRepository.create(
-      timeInterval,
-      this.roomMapper.toModel(bookedRoom),
-      this.candidateMapper.toModel(candidate),
-      this.recruiterMapper.toModel(recruiter),
-    );
+    // WHEN
+    const interview = Interview.create(recruiters, rooms, candidate);
+
+    if (!interview) {
+      throw new Error('Cannot create interview, no recruiters or rooms available');
+    }
+
+    // THEN
+    this.bookRoomUseCase.book(interview.room, interview.timeInterval);
+    this.interviewRepository.save(interview);
+    return interview;
   }
 }

@@ -1,6 +1,6 @@
-import { CandidateRepositoryInterface } from "../core/business/candidate/candidate-repository.interface";
-import {Candidate} from "../core/business/candidate/candidate.model";
-import {CandidateDTO} from "../common/dto/candidate/candidate.dto";
+import { CandidateRepositoryInterface } from "../core/business/candidate-repository.interface";
+import {Candidate} from "../core/business/candidate.model";
+import {CandidateDTO} from "../common/dto/candidate.dto";
 import {CandidateMapper} from "../common/mapper/candidate.mapper";
 
 export class CandidateRepository implements CandidateRepositoryInterface {

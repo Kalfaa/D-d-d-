@@ -1,6 +1,6 @@
-import {RoomRepositoryInterface} from "../core/business/room/room-repository.interface";
-import {Room} from "../core/business/room/room.model";
-import {RoomDTO} from "../common/dto/room/room.dto";
+import {RoomRepositoryInterface} from "../core/business/room-repository.interface";
+import {Room} from "../core/business/room.model";
+import {RoomDTO} from "../common/dto/room.dto";
 import {RoomMapper} from "../common/mapper/room.mapper";
 
 export class RoomRepository implements RoomRepositoryInterface {
@@ -12,7 +12,7 @@ export class RoomRepository implements RoomRepositoryInterface {
     return undefined;
   }
 
-  getRoomByAvailabilities(availabilities: [Date, Date][]): { room: RoomDTO; availabilityInterval: [Date, Date] } | undefined {
-    return undefined;
+  getRooms(availabilities: [Date, Date][]): RoomDTO[] {
+    return [].map((r) => this.roomMapper.toDTO(r));
   }
 }

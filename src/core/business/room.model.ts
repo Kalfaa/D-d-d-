@@ -15,4 +15,9 @@ export class Room {
 
     this.availabilities.splice(availabilityIndex, 1);
   }
+
+  public isAvailable(interval: [Date, Date]): boolean {
+    return this.availabilities.some((a) => a[0] <= interval[0] && a[1] <= interval[1]);
+  }
 }
+

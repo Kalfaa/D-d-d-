@@ -1,6 +1,6 @@
-import { HR } from '../../core/business/employees/hr.model'
+import { HR } from '../../core/business/hr.model'
 import {Mapper} from "./mapper.interface";
-import {HrDto} from "../dto/employees/hr.dto";
+import {HrDto} from "../dto/hr.dto";
 
 export class HrMapper implements Mapper<HR, HrDto> {
     toDTO(model: HR): HrDto {

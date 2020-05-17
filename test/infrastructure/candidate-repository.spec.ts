@@ -1,6 +1,6 @@
 import {CandidateRepository} from "../../src/infrastructure/candidate.repository";
 import {CandidateMapper} from "../../src/common/mapper/candidate.mapper";
-import {CandidateDTO} from "../../src/common/dto/candidate/candidate.dto";
+import {CandidateDTO} from "../../src/common/dto/candidate.dto";
 
 describe('Candidate repository', () => {
   const candidateMapper = new CandidateMapper();

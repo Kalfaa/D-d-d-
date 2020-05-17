@@ -1,6 +1,6 @@
-import { Recruiter } from '../../core/business/employees/recruiter.model'
+import { Recruiter } from '../../core/business/recruiter.model'
 import {Mapper} from "./mapper.interface";
-import {RecruiterDTO} from "../dto/employees/recruiter.dto";
+import {RecruiterDTO} from "../dto/recruiter.dto";
 
 export class RecruiterMapper implements Mapper<Recruiter, RecruiterDTO> {
     toDTO(model: Recruiter): RecruiterDTO {
